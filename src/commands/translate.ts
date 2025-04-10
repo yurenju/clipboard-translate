@@ -1,7 +1,6 @@
 import { TranslateService } from '../services/translate';
 import { ClipboardService } from '../services/clipboard';
 import chalk from 'chalk';
-import notifier from 'node-notifier';
 
 interface TranslateCommandOptions {
   from?: string;
