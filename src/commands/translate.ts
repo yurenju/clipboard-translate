@@ -49,14 +49,6 @@ export async function handleTranslateCommand(
     console.log('\nTranslated text:');
     console.log(chalk.green(translated));
     console.log('\n' + chalk.gray('(Result has been copied to clipboard)'));
-
-    // Show notification
-    notifier.notify({
-      title: 'Translation Complete',
-      message: 'Translation has been copied to clipboard',
-      sound: true,
-      wait: false
-    });
   } catch (error) {
     console.error(chalk.red('Error: Translation failed'));
     console.error(chalk.red(error instanceof Error ? error.message : 'Unknown error'));
