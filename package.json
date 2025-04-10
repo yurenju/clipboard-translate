@@ -14,7 +14,12 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["translate", "clipboard", "deepl", "cli"],
+  "keywords": [
+    "translate",
+    "clipboard",
+    "deepl",
+    "cli"
+  ],
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -28,8 +33,12 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "@types/node-notifier": "^8.0.5",
+    "chalk": "^5.4.1",
     "clipboardy": "^4.0.0",
+    "commander": "^13.1.0",
     "deepl-node": "^1.17.3",
-    "dotenv": "^16.5.0"
+    "dotenv": "^16.5.0",
+    "node-notifier": "^10.0.1"
   }
 }

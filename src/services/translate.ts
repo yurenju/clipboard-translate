@@ -1,5 +1,10 @@
 import * as deepl from 'deepl-node';
-import 'dotenv/config';
+import * as path from 'path';
+import * as dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+
+// Load environment variables from .env file
+dotenv.config({ path: path.join(path.dirname(fileURLToPath(import.meta.url)), '../../.env') });
 
 export interface TranslateOptions {
   from?: string;
@@ -9,6 +14,9 @@ export interface TranslateOptions {
 export interface SupportedLanguage {
   code: string;
   name: string;
+  supportsFormality?: boolean;
+  isSource?: boolean;
+  isTarget?: boolean;
 }
 
 /**
@@ -37,7 +45,7 @@ export class TranslateService {
     try {
       const result = await this.client.translateText(
         text,
-        options.from?.toUpperCase() as deepl.SourceLanguageCode || null,
+        (options.from?.toUpperCase() || null) as deepl.SourceLanguageCode | null,
         options.to.toUpperCase() as deepl.TargetLanguageCode
       );
       return result.text;
@@ -53,11 +61,48 @@ export class TranslateService {
    */
   public async getSupportedLanguages(): Promise<SupportedLanguage[]> {
     try {
-      const sourceLanguages = await this.client.getSourceLanguages();
-      return sourceLanguages.map(lang => ({
-        code: lang.code.toLowerCase(),
-        name: lang.name,
-      }));
+      // Get both source and target languages
+      const [sourceLanguages, targetLanguages] = await Promise.all([
+        this.client.getSourceLanguages(),
+        this.client.getTargetLanguages()
+      ]);
+
+      // Create a map to store merged language information
+      const languageMap = new Map<string, SupportedLanguage>();
+
+      // Process source languages
+      sourceLanguages.forEach(lang => {
+        languageMap.set(lang.code.toLowerCase(), {
+          code: lang.code.toLowerCase(),
+          name: lang.name,
+          isSource: true,
+          isTarget: false
+        });
+      });
+
+      // Process target languages
+      targetLanguages.forEach(lang => {
+        const code = lang.code.toLowerCase();
+        if (languageMap.has(code)) {
+          // Language exists as source, update target status
+          const existing = languageMap.get(code)!;
+          existing.isTarget = true;
+          existing.supportsFormality = 'supportsFormality' in lang && lang.supportsFormality;
+        } else {
+          // New target-only language
+          languageMap.set(code, {
+            code,
+            name: lang.name,
+            isSource: false,
+            isTarget: true,
+            supportsFormality: 'supportsFormality' in lang && lang.supportsFormality
+          });
+        }
+      });
+
+      // Convert map to array and sort by code
+      return Array.from(languageMap.values())
+        .sort((a, b) => a.code.localeCompare(b.code));
     } catch (error) {
       throw new Error(`Failed to get supported languages: ${error instanceof Error ? error.message : 'Unknown error'}`);
     }

@@ -30,9 +30,9 @@ src/
 - [x] Create basic project structure
 
 ### Phase 2: Core Functionality
-- [ ] Implement clipboard service
-  - [ ] Read from clipboard
-  - [ ] Write to clipboard
+- [x] Implement clipboard service
+  - [x] Read from clipboard
+  - [x] Write to clipboard
 - [x] Implement DeepL translation service
   - [x] Set up DeepL API client
   - [x] Implement translation function
@@ -42,16 +42,16 @@ src/
   - [x] Format language list output
 
 ### Phase 3: CLI Implementation
-- [ ] Set up CLI framework (commander.js)
-- [ ] Implement translate command
-  - [ ] Parse target language argument
-  - [ ] Handle clipboard input
-  - [ ] Process translation
-  - [ ] Output results
-- [ ] Implement languages command
-  - [ ] Display formatted language list
-- [ ] Add error handling
-- [ ] Add help messages
+- [x] Set up CLI framework (commander.js)
+- [x] Implement translate command
+  - [x] Parse target language argument
+  - [x] Handle clipboard input
+  - [x] Process translation
+  - [x] Output results
+- [x] Implement languages command
+  - [x] Display formatted language list
+- [x] Add error handling
+- [x] Add help messages
 
 ### Phase 4: Documentation and Polish
 - [ ] Complete README documentation
