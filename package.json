@@ -1,7 +1,7 @@
 {
   "name": "clipboard-translate",
   "version": "1.0.0",
-  "description": "A simple command-line tool that translates text from your clipboard to a specified language using Google Translate.",
+  "description": "A simple command-line tool that translates text from your clipboard to a specified language using DeepL API",
   "main": "index.js",
   "type": "module",
   "directories": {
@@ -14,7 +14,7 @@
     "format": "prettier --write \"src/**/*.ts\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": ["translate", "clipboard", "deepl", "cli"],
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -26,5 +26,10 @@
     "eslint-plugin-prettier": "^5.2.6",
     "prettier": "^3.5.3",
     "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "clipboardy": "^4.0.0",
+    "deepl-node": "^1.17.3",
+    "dotenv": "^16.5.0"
   }
 }

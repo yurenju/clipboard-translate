@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines the implementation plan for the Clipboard Translator project, which will be built using TypeScript and utilize Google Translate API.
+This document outlines the implementation plan for the Clipboard Translator project, which will be built using TypeScript and utilize DeepL API.
 
 ## Project Structure
 
@@ -24,23 +24,22 @@ src/
 ## Implementation Phases
 
 ### Phase 1: Project Setup
-- [ ] Initialize TypeScript project
-- [ ] Set up ESLint and Prettier
-- [ ] Configure build tools (tsc)
-- [ ] Create basic project structure
-- [ ] Set up testing environment (Jest)
+- [x] Initialize TypeScript project
+- [x] Set up ESLint and Prettier
+- [x] Configure build tools (tsc)
+- [x] Create basic project structure
 
 ### Phase 2: Core Functionality
 - [ ] Implement clipboard service
   - [ ] Read from clipboard
   - [ ] Write to clipboard
-- [ ] Implement Google Translate service
-  - [ ] Set up Google Translate API client
-  - [ ] Implement translation function
-  - [ ] Handle API errors
-- [ ] Create language list functionality
-  - [ ] Fetch supported languages
-  - [ ] Format language list output
+- [x] Implement DeepL translation service
+  - [x] Set up DeepL API client
+  - [x] Implement translation function
+  - [x] Handle API errors
+- [x] Create language list functionality
+  - [x] Fetch supported languages
+  - [x] Format language list output
 
 ### Phase 3: CLI Implementation
 - [ ] Set up CLI framework (commander.js)
@@ -65,15 +64,14 @@ src/
 
 ### Dependencies
 - `commander`: CLI framework
-- `@google-cloud/translate`: Google Translate API client
+- `deepl-node`: DeepL API client
 - `clipboardy`: Clipboard operations
 - `typescript`: TypeScript compiler
 - `eslint`: Code linting
 - `prettier`: Code formatting
 
 ### API Integration
-- Google Cloud Translate API
-  - Set up Google Cloud project
-  - Configure API credentials
-  - Implement rate limiting
+- DeepL API
+  - Set up DeepL account
+  - Configure API key
   - Handle API quotas
