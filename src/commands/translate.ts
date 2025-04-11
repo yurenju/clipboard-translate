@@ -52,14 +52,6 @@ export async function handleTranslateCommand(
     console.error(chalk.red('Error: Translation failed'));
     console.error(chalk.red(error instanceof Error ? error.message : 'Unknown error'));
 
-    // Show error notification
-    notifier.notify({
-      title: 'Translation Failed',
-      message: error instanceof Error ? error.message : 'Unknown error',
-      type: 'error',
-      sound: true
-    });
-
     process.exit(1);
   }
 } 
