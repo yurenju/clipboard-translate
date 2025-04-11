@@ -1,10 +1,5 @@
 import * as deepl from 'deepl-node';
-import * as path from 'path';
-import * as dotenv from 'dotenv';
-import { fileURLToPath } from 'url';
-
-// Load environment variables from .env file
-dotenv.config({ path: path.join(path.dirname(fileURLToPath(import.meta.url)), '../../.env') });
+import { ConfigService } from './config';
 
 export interface TranslateOptions {
   from?: string;
@@ -24,11 +19,15 @@ export interface SupportedLanguage {
  */
 export class TranslateService {
   private client: deepl.Translator;
+  private configService: ConfigService;
 
   constructor() {
-    const apiKey = process.env.DEEPL_API_KEY;
+    this.configService = new ConfigService();
+    const apiKey = this.configService.getDeeplApiKey();
     if (!apiKey) {
-      throw new Error('DEEPL_API_KEY environment variable is not set');
+      throw new Error(
+        'DeepL API key is not set. Please set it using: ct config set-api-key YOUR_API_KEY'
+      );
     }
 
     this.client = new deepl.Translator(apiKey);
@@ -50,7 +49,9 @@ export class TranslateService {
       );
       return result.text;
     } catch (error) {
-      throw new Error(`Translation failed: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Translation failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -64,24 +65,24 @@ export class TranslateService {
       // Get both source and target languages
       const [sourceLanguages, targetLanguages] = await Promise.all([
         this.client.getSourceLanguages(),
-        this.client.getTargetLanguages()
+        this.client.getTargetLanguages(),
       ]);
 
       // Create a map to store merged language information
       const languageMap = new Map<string, SupportedLanguage>();
 
       // Process source languages
-      sourceLanguages.forEach(lang => {
+      sourceLanguages.forEach((lang) => {
         languageMap.set(lang.code.toLowerCase(), {
           code: lang.code.toLowerCase(),
           name: lang.name,
           isSource: true,
-          isTarget: false
+          isTarget: false,
         });
       });
 
       // Process target languages
-      targetLanguages.forEach(lang => {
+      targetLanguages.forEach((lang) => {
         const code = lang.code.toLowerCase();
         if (languageMap.has(code)) {
           // Language exists as source, update target status
@@ -95,16 +96,17 @@ export class TranslateService {
             name: lang.name,
             isSource: false,
             isTarget: true,
-            supportsFormality: 'supportsFormality' in lang && lang.supportsFormality
+            supportsFormality: 'supportsFormality' in lang && lang.supportsFormality,
           });
         }
       });
 
       // Convert map to array and sort by code
-      return Array.from(languageMap.values())
-        .sort((a, b) => a.code.localeCompare(b.code));
+      return Array.from(languageMap.values()).sort((a, b) => a.code.localeCompare(b.code));
     } catch (error) {
-      throw new Error(`Failed to get supported languages: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to get supported languages: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
-} 
+}

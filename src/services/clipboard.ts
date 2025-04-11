@@ -13,7 +13,9 @@ export class ClipboardService {
     try {
       return await clipboard.read();
     } catch (error) {
-      throw new Error(`Failed to read from clipboard: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to read from clipboard: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
 
@@ -26,7 +28,9 @@ export class ClipboardService {
     try {
       await clipboard.write(text);
     } catch (error) {
-      throw new Error(`Failed to write to clipboard: ${error instanceof Error ? error.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to write to clipboard: ${error instanceof Error ? error.message : 'Unknown error'}`
+      );
     }
   }
-} 
+}

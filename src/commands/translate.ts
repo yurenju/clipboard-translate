@@ -38,7 +38,7 @@ export async function handleTranslateCommand(
     console.log('\nTranslating...');
     const translated = await translateService.translate(text, {
       from: options.from,
-      to: target
+      to: target,
     });
 
     // Write result to clipboard
@@ -54,4 +54,4 @@ export async function handleTranslateCommand(
 
     process.exit(1);
   }
-} 
+}

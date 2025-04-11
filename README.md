@@ -1,6 +1,6 @@
 # Clipboard Translator
 
-A simple command-line tool that translates text from your clipboard to a specified language using Google Translate.
+A simple command-line tool that translates text from your clipboard to a specified language using DeepL API.
 
 ## Features
 
@@ -8,6 +8,7 @@ A simple command-line tool that translates text from your clipboard to a specifi
 - List all available languages
 - Simple command-line interface
 - Built with TypeScript
+- System-wide configuration storage
 
 ## Installation
 
@@ -18,24 +19,37 @@ cd clipboard-translate
 
 # Install dependencies
 npm install
-
-# Build the project
-npm run build
 ```
 
 ## Usage
+
+### Configuration
+
+Before using the translator, you need to set up your DeepL API key:
+
+```bash
+# Set your DeepL API key
+npx tsx ./src/index.ts config set-api-key YOUR-API-KEY
+
+# View current API key
+npx tsx ./src/index.ts config show-api-key
+```
 
 ### Translate Text
 
 To translate text from your clipboard to a specific language:
 
 ```bash
-clipboard-translate translate <target-language>
+npx tsx ./src/index.ts translate <target-language>
 ```
 
 Example:
 ```bash
-clipboard-translate translate zh-TW
+# Translate to Traditional Chinese
+npx tsx ./src/index.ts translate zh-TW
+
+# Translate from Japanese to English
+npx tsx ./src/index.ts translate en-US -f ja
 ```
 
 ### List Available Languages
@@ -43,7 +57,7 @@ clipboard-translate translate zh-TW
 To see all available languages:
 
 ```bash
-clipboard-translate languages
+npx tsx ./src/index.ts languages
 ```
 
 ## Development
@@ -60,18 +74,17 @@ clipboard-translate languages
 npm install
 ```
 
-2. Build the project:
-```bash
-npm run build
-```
-
-3. Run in development mode:
+2. Run commands:
 ```bash
 # For translation
-npm run dev translate <target-language>
+npx tsx ./src/index.ts translate <target-language>
 
 # For listing languages
-npm run dev languages
+npx tsx ./src/index.ts languages
+
+# For configuration
+npx tsx ./src/index.ts config set-api-key YOUR-API-KEY
+npx tsx ./src/index.ts config show-api-key
 ```
 
 ## License

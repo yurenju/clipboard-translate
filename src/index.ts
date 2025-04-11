@@ -4,6 +4,7 @@ import { Command } from 'commander';
 import { version } from '../package.json';
 import { handleLanguagesCommand } from './commands/languages';
 import { handleTranslateCommand } from './commands/translate';
+import { handleSetApiKeyCommand, handleShowApiKeyCommand } from './commands/config';
 
 const program = new Command();
 
@@ -23,5 +24,18 @@ program
   .command('languages')
   .description('List all supported languages')
   .action(handleLanguagesCommand);
+
+const configCommand = program.command('config').description('Manage configuration');
+
+configCommand
+  .command('set-api-key')
+  .description('Set DeepL API key')
+  .argument('<api-key>', 'Your DeepL API key')
+  .action(handleSetApiKeyCommand);
+
+configCommand
+  .command('show-api-key')
+  .description('Show current DeepL API key')
+  .action(handleShowApiKeyCommand);
 
 program.parse();
